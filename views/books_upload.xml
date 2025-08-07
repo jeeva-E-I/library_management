@@ -1,0 +1,59 @@
+    <odoo>
+        <record id="view_form_library_upload" model="ir.ui.view"> <!-- ir.ui.view will create -->
+            <field name="name">library.upload.form</field>
+            <field name="model">library.upload</field>
+            <field name="arch" type="xml">
+                <form string="Library upload">
+                    <header>
+                            <field name='state' widget='statusbar' statusbar_visible = "draft,confirmed,ongoing,published"/> <!--  options="{'clickable': '1'}" - will help use to select the status bar, _visible is used to show certain fields alone-->
+                            <button name="action_confirm" type="object" string="Confirm" invisible = "state != 'draft'"/> <!-- If condition is satisfied means, make this button invisible -->
+                            <button name="action_confirm" type="object" string="Ongoing" invisible = "state != 'confirmed'"/>
+                            <button name="action_confirm" type="object" string="Publish" invisible = "state != 'ongoing'"/>
+                            <button name="action_cancel"  type="object" string="Cancel"  invisible="state == 'published' or state == 'cancel'"/>
+                    </header>
+                    <sheet>
+                         <h1>Book Details</h1> 
+                        <group> 
+                            <field name="book_name"/>
+                            <field name="category_id"/>
+                            <field name="description" optional= "hide"/>
+                        </group>
+                        
+                    </sheet>
+                    <sheet>
+                         <h1>Author Details</h1>
+                        <group>
+                            <field name="author_id"/>
+                            <field name="reference"/>
+                        </group>
+                    </sheet>
+
+                    <!-- Chatter settings -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_library_upload" model="ir.ui.view">
+            <field name="name">library.upload.tree</field>
+            <field name="model">library.upload</field>
+            <field name="arch" type="xml">
+                <tree string="Library upload">
+                    <field name="book_name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_library_upload" model="ir.actions.act_window"> <!-- is a window action  what Odoo uses to open views (like forms or lists)-->
+            <field name="name">Upload Books</field> <!--  label for the action-->
+            <field name="res_model">library.upload</field> <!-- res means resource that target which model to open-->
+            <field name="view_mode">tree,form</field> <!-- type of views to show(form, tree, kanban)-->
+
+        </record>
+
+    </odoo>

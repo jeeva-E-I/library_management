@@ -1,0 +1,24 @@
+<!-- library_management/views/book_views.xml -->
+<odoo>
+    
+    <record id="view_tree_book_tag" model="ir.ui.view">
+        <field name="name">library.book_tag.tree</field>
+        <field name="model">library.book_tag</field>
+        <field name="arch" type="xml">
+            <tree string="Library Book_Tags" editable="bottom">
+                <field name="name" /> <!-- if we need to edit the tree view we need editable attribute-->
+                <field name="sequence" widget="handle" /> <!-- handle is used to drag the items in arrange in the tree view-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_book_tag" model="ir.actions.act_window"> <!-- is a window action  what Odoo uses to open views (like forms or lists)-->
+        <field name="name">Books Tag</field> <!--  label for the action-->
+        <field name="res_model">library.book_tag</field> <!-- res means resource that target which model to open-->
+        <field name="view_mode">tree</field> <!-- type of views to show(form, tree, kanban)-->
+
+    </record>
+</odoo>
+
+
+        

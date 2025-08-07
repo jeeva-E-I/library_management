@@ -1,0 +1,69 @@
+<!-- library_management/views/book_views.xml -->
+<odoo>
+    <record id="view_form_library_book" model="ir.ui.view"> <!-- ir.ui.view will create -->
+        <field name="name">library.book.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form string="Library Book" delete="0" >
+                <header>
+                    <button name="duplicate_record" type="object" string="Duplicate" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group> <!-- groups are used to give specific name field and value to get without groups it will show a empty input field -->
+                        <field name="name"/>
+                        <field name="author_id"/>
+                        <field name="isbn"/>
+                        <field name="category_id"/>
+                        <field name="published_date"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+                <sheet>
+                    <group string="Tags">
+                        <field name="tag_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+
+                <!-- Chatter settings -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tree_library_book" model="ir.ui.view">
+        <field name="name">library.book.tree</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree string="Library Books" edit='0' delete="0">
+                <field name="name" string="Title"/>
+                <field name="author_id"/>
+                <field name="isbn" optional= "show"/> <!-- optional is show means we can add or remove the columns -->
+                <field name="category_id"/>
+                <field name="published_date" optional="hide"/> <!-- If hide is used means it is hidden but can be added if needed -->
+                <field name="description" optional= "hide" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_library_book" model="ir.actions.act_window"> <!-- is a window action  what Odoo uses to open views (like forms or lists)-->
+        <field name="name">Books</field> <!--  label for the action-->
+        <field name="res_model">library.book</field> <!-- res means resource that target which model to open-->
+        <field name="view_mode">tree,form</field> <!-- type of views to show(form, tree, kanban)-->
+
+    </record>
+    <!-- defines one entry in the menu system.-->
+    <menuitem id="menu_library_root" name="Library" web_icon= "/library_management/static/description/icon.png"/>  <!-- web icons are used to show icons in menu-->
+    <menuitem id="menu_library_books" name="Details" parent="menu_library_root"/>
+    <menuitem id="menu_library_author" name="View Authors" parent="menu_library_books" action="action_library_author"/>
+    <menuitem id="menu_library_readonly" name="View Books" parent="menu_library_books" action="action_library_readonly_books"/>
+    <menuitem id="menu_library_category" name="View Category" parent="menu_library_books" action="action_library_category"/>
+    <menuitem id="menu_library_upload" name="Upload Books" parent="menu_library_root" action="action_library_upload"/>
+    <menuitem id="menu_configuration" name="Configuration" parent="menu_library_root" sequence="100" />
+    <menuitem id="menu_book_tag" name="Tags" parent="menu_configuration"  action="action_book_tag"/>
+</odoo>
+
+
+        

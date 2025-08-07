@@ -1,0 +1,23 @@
+<odoo>
+    <!-- Sequences for category -->
+    <data noupdate='1'> <!-- which means if the user changed some values in ui means it will remain constant-->
+        <record id="seq_lib_category" model="ir.sequence">
+            <field name="name">Category Reference</field>
+            <field name="code">library.category</field>
+            <field name="prefix">BC</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+    <data noupdate='1'> <!-- which means if the user changed some values in ui means it will remain constant-->
+        <record id="seq_lib_author" model="ir.sequence">
+            <field name="name">Author Reference</field>
+            <field name="code">library.author</field>
+            <field name="prefix">AR</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+</odoo>

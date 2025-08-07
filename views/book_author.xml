@@ -1,0 +1,62 @@
+<!-- library_management/views/book_views.xml -->
+<odoo>
+    <record id="view_form_library_author" model="ir.ui.view"> <!-- ir.ui.view will create -->
+        <field name="name">library.author.form</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <form string="Library author">
+                <sheet>
+                    <group> <!-- groups are used to give specific name field and value to get without groups it will show a empty input field -->
+                        <field name="reference" readonly='True'/>
+                        <field name="name"/> <!-- Here we making the tree view as editable if we don't need means we can specify it-->
+                    </group>
+            
+                    <notebook>
+                        <page name="book_detail" string="Book Details">
+                            <field name="author_ids" readonly="True"> <!-- This is one to many field -->
+                                <tree readonly= 'True' > <!-- if we use editable="bottom" it will able to create at tree view itself-->
+                                    <field name="name"/>
+                                    <field name="category_id"/>
+                                    <field name="isbn" optional= "show"/>
+                                    <field name="published_date" optional="hide"/>
+                                    <field name="description" optional= "hide" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="other_details" string="Other Info">
+                            <group>
+                                <field name="dob" />
+                            </group>
+                        </page>
+                    </notebook>
+                        
+                </sheet>
+                <!-- Chatter settings -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tree_library_author" model="ir.ui.view">
+        <field name="name">library.author.tree</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <tree string="Library Author">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="author_ids"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_library_author" model="ir.actions.act_window"> <!-- is a window action  what Odoo uses to open views (like forms or lists)-->
+        <field name="name">Author</field> <!--  label for the action-->
+        <field name="res_model">library.author</field> <!-- res means resource that target which model to open-->
+        <field name="view_mode">tree,form</field> <!-- type of views to show(form, tree, kanban)-->
+
+    </record>
+</odoo>

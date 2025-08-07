@@ -1,0 +1,41 @@
+<odoo>
+    <record id="view_form_library_category" model="ir.ui.view"> <!-- ir.ui.view will create -->
+        <field name="name">library.category.form</field>
+        <field name="model">library.category</field>
+        <field name="arch" type="xml">
+            <form string="Library Category">
+                <sheet>
+                    <group> 
+                        <field name="reference" readonly='True'/> <!-- Readonly makes the column readonly not write-->
+                        <field name="category"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+
+                <!-- Chatter settings -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tree_library_category" model="ir.ui.view">
+        <field name="name">library.category.tree</field>
+        <field name="model">library.category</field>
+        <field name="arch" type="xml">
+            <tree string="Library category">
+                <field name="reference"/>
+                <field name="category"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_library_category" model="ir.actions.act_window"> <!-- is a window action  what Odoo uses to open views (like forms or lists)-->
+        <field name="name">Category</field> <!--  label for the action-->
+        <field name="res_model">library.category</field> <!-- res means resource that target which model to open-->
+        <field name="view_mode">tree,form</field> <!-- type of views to show(form, tree, kanban)-->
+
+    </record>
+</odoo>
