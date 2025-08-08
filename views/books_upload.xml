@@ -17,6 +17,8 @@
                             <field name="book_name"/>
                             <field name="category_id"/>
                             <field name="description" optional= "hide"/>
+                            <field name="my_currency_id" />
+                            <field name="amount" />
                         </group>
                         
                     </sheet>
@@ -45,6 +47,8 @@
                 <tree string="Library upload">
                     <field name="book_name"/>
                     <field name="state"/>
+                    <field name="my_currency_id" optional="hide"/>
+                    <field name="amount" />
                 </tree>
             </field>
         </record>

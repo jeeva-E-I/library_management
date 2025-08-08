@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 from datetime import date
 
 
@@ -45,13 +46,24 @@ class BookAuthor(models.Model):
 
     reference = fields.Char(string='Reference', default= 'New')
     name = fields.Char(string='Author Name', required=True)
+    author_image = fields.Image(max_width = 128, max_height=128, attachment=False) # image fields are used to add image
     author_ids = fields.One2many('library.book', 'author_id', string="Books")
     dob = fields.Date(string="DOB")
+    binary_field = fields.Binary(string="Upload Id proof",copy=False) # Binary fields are used to add files making copy false means if we duplicate the field means file won't uploaded in duplicate section
+    binary_file_name = fields.Char(string="Binary file_name")
+    # For multiple uploads
+    binary_fields = fields.Many2many("ir.attachment", string="Multi Files upload") # odoo has built in module for handling files so we use ir.attachments
 
-    @api.model_create_multi
+
+    @api.model_create_multi 
     def create(self, val_list):
         for vals in val_list:
             if not vals.get('reference') or vals['reference'] == 'New':
                 vals['reference'] = self.env['ir.sequence'].next_by_code('library.author')
         return super().create(val_list)
     
+    @api.ondelete(at_uninstall=False) # is for handling side effects in the related model when the referenced record is deleted.
+    def _prevent_delete_if_books_exist(self):
+        for author in self:
+            if author.book_ids:
+                raise UserError(f"Cannot delete author '{author.name}' because books are still linked.")

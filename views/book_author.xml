@@ -6,11 +6,19 @@
         <field name="arch" type="xml">
             <form string="Library author">
                 <sheet>
-                    <group> <!-- groups are used to give specific name field and value to get without groups it will show a empty input field -->
-                        <field name="reference" readonly='True'/>
-                        <field name="name"/> <!-- Here we making the tree view as editable if we don't need means we can specify it-->
+                    <group>
+                        <group> <!-- groups are used to give specific name field and value to get without groups it will show a empty input field -->
+                            <field name="reference" readonly='True'/>
+                            <field name="name"/> <!-- Here we making the tree view as editable if we don't need means we can specify it-->
+                            <field name="binary_fields" widget="many2many_binary"/>
+                        </group>
+                        <group>
+                            <field name="author_image" widget="image" style="width: 100px; height:100px"/> <!-- By adding widget image it will show icon-->
+                            <field name="binary_field" filename= "binary_file_name" /> <!-- we need to specify the filename here what ever the filename will be displayed-->
+                            <field name="binary_file_name" invisible= "1" /> <!-- this field is not needed to show in UI so we make it invisible-->
+                        </group>    
                     </group>
-            
+
                     <notebook>
                         <page name="book_detail" string="Book Details">
                             <field name="author_ids" readonly="True"> <!-- This is one to many field -->
